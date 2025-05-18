@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Proxy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter URL to Proxy</h1>
+    <input type="text" id="urlInput" placeholder="Enter website URL (e.g., https://example.com)">
+    <button id="loadWebsiteBtn">Go</button>
+
+    <iframe id="proxyFrame"></iframe> <!-- This will be where the proxied content is displayed -->
+
+    <script>
+        document.getElementById('loadWebsiteBtn').addEventListener('click', function() {
+            var url = document.getElementById('urlInput').value;
+
+            if (url) {
+                // Make sure the URL starts with http:// or https://
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+
+                // The backend proxy URL
+                var proxyUrl = 'http://localhost:3000/proxy?url=' + encodeURIComponent(url);
+
+                // Set the iframe's source to the proxy server
+                document.getElementById('proxyFrame').src = proxyUrl;
+            }
+        });
+    </script>
+</body>
+</html>
